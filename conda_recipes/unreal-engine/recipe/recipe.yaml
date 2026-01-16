@@ -18,9 +18,9 @@ build:
   string: ${{ build_number }}
   script:
     # Creating the Engine directory structure in the conda prefix dir
-    - if not exist "%PREFIX%\Engine" mkdir "%PREFIX%\Engine"
+    - if not exist "%PREFIX%\unreal-engine\UE_${{ version }}\Engine" mkdir "%PREFIX%\unreal-engine\UE_${{ version }}\Engine"
     # Using robocopy to efficiently copy files while preserving attributes
-    - robocopy "%SRC_DIR%" "%PREFIX%\Engine" /E /COPY:DAT /R:1 /W:1 & if %ERRORLEVEL% LEQ 7 (exit /b 0) else (exit /b %ERRORLEVEL%)
+    - robocopy "%SRC_DIR%" "%PREFIX%\unreal-engine\UE_${{ version }}\Engine" /E /COPY:DAT /R:1 /W:1 & if %ERRORLEVEL% LEQ 7 (exit /b 0) else (exit /b %ERRORLEVEL%)
   files:
     exclude:
       # Directories to exclude
@@ -60,7 +60,7 @@ build:
 
 tests:
   - script:
-    - if not exist "%PREFIX%\Engine\Binaries\Win64\UnrealEditor.exe" exit 1
+      - if not exist "%PREFIX%\unreal-engine\UE_${{ version }}\Engine\Binaries\Win64\UnrealEditor.exe" exit 1
 
 about:
   homepage: https://www.unrealengine.com/
