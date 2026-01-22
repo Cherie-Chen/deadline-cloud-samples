@@ -3,7 +3,7 @@ context:
   version: "5.6"
   # build_number: Used for both version ordering (number) and filename (string).
   # Increment when rebuilding the same version. Output: unrealengine-{version}-{build_number}.conda
-  build_number: 0
+  build_number: 9
 
   
 package:
@@ -17,10 +17,7 @@ build:
   number: ${{ build_number }}
   string: ${{ build_number }}
   script:
-    # Creating the Engine directory structure in the conda prefix dir
-    - if not exist "%PREFIX%\unreal-engine\UE_${{ version }}\Engine" mkdir "%PREFIX%\unreal-engine\UE_${{ version }}\Engine"
-    # Using robocopy to efficiently copy files while preserving attributes
-    - robocopy "%SRC_DIR%" "%PREFIX%\unreal-engine\UE_${{ version }}\Engine" /E /COPY:DAT /R:1 /W:1 & if %ERRORLEVEL% LEQ 7 (exit /b 0) else (exit /b %ERRORLEVEL%)
+    - bash %RECIPE_DIR%\build.sh
   files:
     exclude:
       # Directories to exclude
